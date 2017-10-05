@@ -6,7 +6,10 @@ package com.auth.android.authentication
 interface SplashNavigationListener {
     fun loadSignupFragment()
     fun loadWelcomeFragment()
+    fun phonenumberFragment()
     fun setauthPresenter(authPresenter: AuthPresenter)
     fun getauthPresenter():AuthPresenter
+    fun loginData(dataModel: DataModel)
+    fun getData():DataModel
 
 }

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,17 +18,19 @@ import com.auth.android.utils.kotlin.hideProgress
 import com.auth.android.utils.kotlin.showProgress
 import com.fitlinks.authentication.AuthView
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.fragment_child.*
 import kotlinx.android.synthetic.main.fragment_signup_signin.*
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 /**
  * Created by nasima on 29/09/17.
  */
-class WelcomeFragment() :  Fragment() ,View.OnClickListener ,AuthView {
+class WelcomeFragment() :  Fragment() ,View.OnClickListener ,AuthView  {
 
 
-    lateinit var mauthPresenter:AuthPresenter
+    lateinit var mAuthPresenter:AuthPresenter
     lateinit var splashNavigationListener: SplashNavigationListener
+
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -42,19 +46,41 @@ class WelcomeFragment() :  Fragment() ,View.OnClickListener ,AuthView {
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mauthPresenter= splashNavigationListener.getauthPresenter()
+        mAuthPresenter= splashNavigationListener.getauthPresenter()
         signOutButton.setOnClickListener(this)
+        childButton.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         if(p0?.id == R.id.signOutButton)
         {
-            gmailSignOutAction()
+            signOut()
+        }
+        if(p0?.id == R.id.childButton)
+        {
+            loadChildFragment()
         }
     }
+
+    fun signOut() {
+        mAuthPresenter.signOut()
+        Toast.makeText(context,"Successfully logged out",Toast.LENGTH_LONG).show()
+        splashNavigationListener.loadSignupFragment()
+    }
+
+    fun loadChildFragment()
+    {
+        Toast.makeText(context,"child fragment",Toast.LENGTH_LONG).show()
+        val childFragment = ChildFragment()
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.child_fragment_container, childFragment).commit()
+    }
+
+
     private  fun gmailSignOutAction()
     {
-        mauthPresenter.signOutWithGoogle()
+
         splashNavigationListener.loadSignupFragment()
     }
 

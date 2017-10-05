@@ -3,23 +3,20 @@ package com.auth.android
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.auth.android.authentication.AuthPresenter
-import com.auth.android.authentication.SignUpSignInFragment
-import com.auth.android.authentication.SplashNavigationListener
-import com.auth.android.authentication.WelcomeFragment
+import android.widget.Toast
+import com.auth.android.authentication.*
 
 class SplashActivity : AppCompatActivity() , SplashNavigationListener  {
 
 
-
-
     lateinit var authPresenter : AuthPresenter
+    lateinit var dataModel : DataModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        loadSignupFragment()
+        phonenumberFragment()
     }
 
     lateinit var signupSigninFragment: SignUpSignInFragment
@@ -38,6 +35,16 @@ class SplashActivity : AppCompatActivity() , SplashNavigationListener  {
         fragmentTransaction.replace(R.id.container, welcomeFragment).commit()
     }
 
+    lateinit var PhonenumberFragment: PhonenumberFragment
+    override fun phonenumberFragment() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+       PhonenumberFragment =PhonenumberFragment()
+        fragmentTransaction.replace(R.id.container, PhonenumberFragment).commit()
+    }
+
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -52,6 +59,20 @@ class SplashActivity : AppCompatActivity() , SplashNavigationListener  {
     override fun getauthPresenter(): AuthPresenter {
         return authPresenter
     }
+
+
+
+    override fun loginData(dataModel: DataModel) {
+        this.dataModel = dataModel
+    }
+
+
+
+    override fun getData(): DataModel {
+        return dataModel
+    }
+
+
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()

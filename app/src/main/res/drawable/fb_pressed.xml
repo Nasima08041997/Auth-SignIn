@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <stroke
+                android:width="1dp"
+                android:color="@color/fb"/>
+            <solid
+                android:color="@color/fb_pressed"/>
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_facebook"
+        android:gravity="center">
+    </item>
+</layer-list>

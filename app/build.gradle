@@ -9,7 +9,7 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.auth.android"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -93,5 +93,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
+
+
+    // Facebook
+    implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
+
+    // Twitter Android SDK (only required for Twitter Login)
+    compile 'com.twitter.sdk.android:twitter:3.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

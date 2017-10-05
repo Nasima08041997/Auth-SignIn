@@ -13,6 +13,7 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import auth.authPres
 import com.auth.android.R
+import com.auth.android.R.id.*
 import com.auth.android.utils.kotlin.hideProgress
 import com.auth.android.utils.kotlin.showProgress
 import com.fitlinks.authentication.AuthView
@@ -25,11 +26,15 @@ import com.auth.android.utils.kotlin.show
 
 import kotlinx.android.synthetic.main.fragment_signup_signin.*
 import com.auth.android.utils.kotlin.showProgress
+import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.internal.se
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.twitter.sdk.android.core.identity.TwitterAuthClient
+import com.twitter.sdk.android.core.models.User
 import kotlinx.android.synthetic.main.fragment_signup_signin.view.*
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
@@ -42,6 +47,18 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
 
     lateinit var mAuthType: String
     lateinit var authPresenter:AuthPresenter
+    var mAuth = getFirebaseAuth()
+    var currentUser: FirebaseUser? = null
+
+    lateinit var callbackManager: CallbackManager
+    lateinit var mTwitterAuthClient: TwitterAuthClient
+
+
+
+    fun getFirebaseAuth(): FirebaseAuth {
+        val mAuth = FirebaseAuth.getInstance()
+        return mAuth
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_signup_signin, container, false)
@@ -51,16 +68,30 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fbButton.setOnClickListener(this)
         gmailButton.setOnClickListener(this)
+        twitterButton.setOnClickListener(this)
         signupButton.setOnClickListener(this)
         loginButton.setOnClickListener(this)
         signupRadioButton.setOnCheckedChangeListener(this)
         loginRadioButton.setOnCheckedChangeListener(this)
-        authPresenter=AuthPresenter(activity,this)
+        authPresenter = AuthPresenter(activity, this)
         data(authPresenter)
+        authenticateUser()
+
+
+        callbackManager = CallbackManager.Factory.create()
+       // mTwitterAuthClient = TwitterAuthClient()
+
+
+
         signupRadioButton.isChecked = true
         toggleViews("signup")
 
+    }
+
+    fun authenticateUser() {
+        currentUser= mAuth.currentUser
     }
 
     lateinit var splashNavigationListener: SplashNavigationListener
@@ -87,9 +118,19 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
             R.id.loginButton -> {
                 logIn()
             }
+            R.id.fbButton -> {
+
+               // fbAction()
+
+            }
+            R.id.twitterButton -> {
+               // twitterAction()
+
+            }
         }
 
     }
+
 
 
     fun signUp()
@@ -98,7 +139,9 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
             if (isValidEmail(EditUserEmail.getText().toString())) {
                 val data = DataModel(userName= EditUserName.getText().toString(),userEmail = EditUserEmail.getText().toString(),userPassword = EditUserPassword.getText().toString())
                 signUpUserdata().push().setValue(data)
+                authPresenter.signUpWithEmail(EditUserEmail.text.toString(),EditUserPassword.text.toString())
                 splashNavigationListener.loadWelcomeFragment()
+                splashNavigationListener.loginData(data)
             }
             else
                 UserEmail.error = "Enter Valid Email"
@@ -119,22 +162,35 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
     {
         if(validate())
         {
-            val data = DataModel(userName= EditUserName.getText().toString(),userEmail ="",userPassword = EditUserPassword.getText().toString())
+            val data = DataModel(userEmail= EditUserEmail.getText().toString(),userPassword = EditUserPassword.getText().toString())
             logInUserdata().push().setValue(data)
+            authPresenter.signInWithEmail(EditUserEmail.text.toString(),EditUserPassword.text.toString())
             splashNavigationListener.loadWelcomeFragment()
+            splashNavigationListener.loginData(data)
+
+
         }
     }
+
 
     fun data(authPresenter: AuthPresenter)
     {
         splashNavigationListener.setauthPresenter(authPresenter)
     }
 
+    private fun twitterAction() {
+        mAuthType = "Twitter"
+        authPresenter.authorizeWithTwitter(mTwitterAuthClient)
+    }
+
     private fun gmailAction() {
         mAuthType = "google"
         authPresenter.signInWithGoogle()
+    }
 
-
+    private fun fbAction() {
+        mAuthType = "facebook"
+        authPresenter.authorizeWithFB(callbackManager)
     }
 
 
@@ -174,9 +230,9 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
             "login" -> {
 
                 loginButton.show()
-                UserName.show()
+                UserName.hide()
                 confirmPassword.show()
-                UserEmail.hide()
+                UserEmail.show()
                 confirmPassword.hide()
                 signupButton.hide()
             }
@@ -274,6 +330,8 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
                 val account = result.signInAccount
                 if (account != null) {
                     loadwelcome()
+
+                    authPresenter.firebaseAuthWithGoogle(account)
                 }
             } else {
                 onError("Unable to Sign In")
@@ -286,8 +344,15 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
 
 
     override fun updateUI(user: FirebaseUser?) {
-
-
+        Toast.makeText(activity, "Success", Toast.LENGTH_LONG).show()
+        //if (AuthenticationApplication.getPreferences().getUser() == null) {
+          //  val userObject = User(
+                   // user?.displayName!!,
+                           // user.email!!
+            //)
+           // AuthenticationApplication.getPreferences()!!.setUser(userObject)
+       // }
+        loadwelcome()
     }
 
     override fun hideProgress() {
