@@ -6,8 +6,13 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="link_msg">An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.</string>
-    <string name="otp_info">We have sent you One Time Password to your phone number. It may take a while and is valid for 10 minutes only.</string>
+    <string name="otp_info">We have sent you One Time Password to %s. It may take a while and is valid for 10 minutes only.</string>
     <string name="resend_otp">RESEND OTP</string>
     <string name="verify">VERIFY</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">Message</string>
+    <string name="notification_subscribed">Notification Subscribed</string>
+
 
 </resources>

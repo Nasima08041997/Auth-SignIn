@@ -33,4 +33,9 @@ class AuthenticationPreference(mContext: Context) {
             return Gson().fromJson(userDetails, User::class.java)
         }
     }
+
+    fun setMessageCount(messageCount: Int) {
+        mSharedPreferences.edit().putInt("messageCount", messageCount ).apply()
+    }
+
 }

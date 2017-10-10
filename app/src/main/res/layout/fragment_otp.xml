@@ -18,98 +18,126 @@
         android:id="@+id/rlOtpVal"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_marginTop="47dp"
+        android:orientation="horizontal"
         android:layout_below="@+id/tvOtpInfo"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal">
+        android:layout_alignParentStart="true">
 
         <EditText
             android:id="@+id/etOtpOne"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="24dp"
-            android:layout_toLeftOf="@+id/etOtpTwo"
-            android:layout_toStartOf="@+id/etOtpTwo"
             android:background="@drawable/otp_background"
             android:gravity="center"
             android:maxLength="1"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="@color/md_black_1000"
-            />
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/etOtpTwo"
+            android:layout_marginEnd="15dp" />
+        <EditText
+            android:id="@+id/etOtpStart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/otp_background"
+            android:gravity="center"
+            android:maxLength="1"
+            android:inputType="text"
+
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/etOtpOne"
+            android:layout_marginEnd="11dp" />
 
         <EditText
             android:id="@+id/etOtpTwo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="24dp"
-            android:layout_toLeftOf="@+id/verticalDivider"
-            android:layout_toStartOf="@+id/verticalDivider"
             android:background="@drawable/otp_background"
             android:gravity="center"
             android:maxLength="1"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="@color/md_black_1000"
-             />
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/verticalDivider"
+            android:layout_marginEnd="13dp" />
 
         <View
-            android:id="@+id/verticalDivider"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+        android:id="@+id/verticalDivider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
         <EditText
             android:id="@+id/etOtpThree"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_toEndOf="@+id/verticalDivider"
-            android:layout_toRightOf="@+id/verticalDivider"
             android:background="@drawable/otp_background"
             android:gravity="center"
             android:maxLength="1"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="@color/md_black_1000"
-            />
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/verticalDivider" />
 
         <EditText
             android:id="@+id/etOtpFour"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="24dp"
             android:maxLength="1"
-            android:layout_toEndOf="@+id/etOtpThree"
-            android:layout_toRightOf="@+id/etOtpThree"
             android:background="@drawable/otp_background"
             android:gravity="center"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="@color/md_black_1000"
-           />
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/etOtpThree"
+            android:layout_marginStart="11dp" />
+        <EditText
+            android:id="@+id/etOtpEnd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:inputType="text"
+            android:gravity="center"
+            android:background="@drawable/otp_background"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/etOtpFour"
+            android:layout_marginStart="12dp" />
+
     </RelativeLayout>
 
-    <TextView
+    <Button
         android:id="@+id/tvResendOtp"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlOtpVal"
-        android:layout_centerHorizontal="true"
+        android:layout_width="150dp"
         android:padding="@dimen/fab_margin"
         android:text="@string/resend_otp"
         android:textAllCaps="true"
-        android:textColor="@color/md_grey_800" />
+        android:textColor="@color/md_grey_800"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/rlOtpVal"
+        android:layout_alignStart="@+id/btnSubmit" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/tvResendOtp"
-        android:layout_centerHorizontal="true"
         android:paddingBottom="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="8dp"
         android:paddingTop="16dp"
         android:text="@string/verify"
-        android:textColor="@color/md_white_1000" />
+        android:textColor="@color/md_white_1000"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tvResendOtp"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -59,11 +59,11 @@
         android:layout_margin="16dp">
 
         <EditText
-            android:id="@+id/EditPhoneNumber"
+            android:id="@+id/EditTextPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="PhoneNumber"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="@color/colorPrimaryDark" />
 
     </android.support.design.widget.TextInputLayout>
@@ -103,7 +103,7 @@
 
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/signupButtonOTP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
@@ -113,7 +113,7 @@
         android:text="Sign Up"
         android:textColor="@color/white" />
 
-    <Button
+    <!--<Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
         android:gravity="center"
         android:text="Log in"
         android:textColor="@color/white"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
 
     <LinearLayout
         android:id="@+id/buttonLayout"
